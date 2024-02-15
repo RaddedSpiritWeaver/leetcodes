@@ -22,16 +22,12 @@ class Solution:
         #   TODO: check about the validity of while right > left and terminate when left passes right
         while right < m and left < m:
             #   move right till we get everything inside
-            while not self.chars_are_in(t=t, sub= s[left:right]):
-                # if right >= m:
-                #     break
+            while (not self.chars_are_in(t=t, sub= s[left:right])) and right < m:
                 right += 1
             
             #   move left while we still contain everything to shorten
-            while self.chars_are_in(t=t, sub= s[left:right]):
+            while self.chars_are_in(t=t, sub= s[left:right]) and left < m:
                 subs_that_contain.append(s[left:right])
-                # if left >= m:
-                #     break
                 left += 1
                 
         
@@ -44,5 +40,5 @@ class Solution:
 if __name__ == "__main__":
     sol = Solution()
     s = "a"
-    t = "a"
+    t = "b"
     print(sol.minWindow(s=s, t=t))
