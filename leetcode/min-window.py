@@ -9,7 +9,7 @@ class Solution:
         return True
     
     def minWindow(self, s: str, t: str) -> str:
-        right = 1
+        right = 0
         left = 0
         m = len(s)
         n = len(t)
@@ -20,14 +20,18 @@ class Solution:
         
         #   while both pointers and in side the main string
         #   TODO: check about the validity of while right > left and terminate when left passes right
-        while right < m or left < m:
+        while right < m and left < m:
             #   move right till we get everything inside
             while not self.chars_are_in(t=t, sub= s[left:right]):
+                # if right >= m:
+                #     break
                 right += 1
             
             #   move left while we still contain everything to shorten
             while self.chars_are_in(t=t, sub= s[left:right]):
                 subs_that_contain.append(s[left:right])
+                # if left >= m:
+                #     break
                 left += 1
                 
         
@@ -39,6 +43,6 @@ class Solution:
     
 if __name__ == "__main__":
     sol = Solution()
-    s = "ADOBECODEBANC"
-    t = "ABC"
+    s = "a"
+    t = "a"
     print(sol.minWindow(s=s, t=t))
