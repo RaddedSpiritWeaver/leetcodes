@@ -19,14 +19,15 @@ class Solution:
         counter = Counter(arr)
         target = len(arr) - k
         s = set()
+        sorted_elements = counter.most_common()
         while target > 0:
-            most_common = counter.most_common(1)
-            if most_common[0][1] == 1:
+            most_common = sorted_elements.pop(0)
+            if most_common[1] == 1:
                 break
                 
-            target = target - most_common[0][1]
-            counter.pop(most_common[0][0])
-            s.add(most_common[0][0])
+            target = target - most_common[1]
+            counter.pop(most_common[0])
+            s.add(most_common[0])
 
         if target > 0:
             for i in range(target):
