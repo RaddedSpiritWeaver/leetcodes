@@ -22,6 +22,8 @@ class Solution:
         
         #   technically i could stop whenever i couldn't move the right or left pointers any more, and that would be the actual solution
         #   instead of returning the min
+        
+        #   lazy fix, keep this array for the final if, but just store one value in it
         subs_that_contain = []
         
         #   while both pointers and in side the main string
@@ -35,7 +37,12 @@ class Solution:
             #   move left while we still contain everything to shorten
             while self.chars_are_in(t=t_counter, s = s_counter) and left < m:
                 s_counter[s[left]] = s_counter[s[left]] - 1
-                subs_that_contain.append(s[left:right])
+                if len(subs_that_contain) > 0:
+                    if len(subs_that_contain[0]) > (right - left):
+                        subs_that_contain.pop(0)
+                        subs_that_contain.append(s[left:right])
+                else:
+                    subs_that_contain.append(s[left:right])
                 left += 1
                 
         
@@ -43,7 +50,7 @@ class Solution:
         if not subs_that_contain:
             return ""
         
-        return min(subs_that_contain, key=len)
+        return subs_that_contain[0]
     
 if __name__ == "__main__":
     sol = Solution()
