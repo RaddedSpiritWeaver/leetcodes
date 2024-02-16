@@ -10,6 +10,8 @@ class Solution:
         while val <= k:
             k = k - val
             counter.pop(key)
+            if(len(counter) == 0):
+                break
             least_common = counter.most_common()[-1]
             key = least_common[0]
             val = least_common[1]
