@@ -1,11 +1,15 @@
 #   https://leetcode.com/problems/minimum-window-substring/?envType=daily-question&envId=2024-02-12
 
+import copy
+
 class Solution:
     #   TODO: could be more efficient
     def chars_are_in(self, sub:str, t:str):
+        sub_copy = copy.copy(sub)
         for c in t:
-            if c not in sub:
+            if c not in sub_copy:
                 return False
+            sub_copy = sub_copy.replace(c,"",1)
         return True
     
     def minWindow(self, s: str, t: str) -> str:
@@ -39,6 +43,6 @@ class Solution:
     
 if __name__ == "__main__":
     sol = Solution()
-    s = "a"
-    t = "b"
+    s = "aa"
+    t = "aa"
     print(sol.minWindow(s=s, t=t))
