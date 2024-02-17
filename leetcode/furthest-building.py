@@ -9,19 +9,21 @@ class Solution:
                 up_down[i] = 0
             else:
                 up_down[i] = heights[i] - heights[i - 1]
-        
-        up_down = [-x for x in up_down]
 
         path_heap = []
+        used_bricks = 0
         index = 0
         while index < len(up_down):
             if up_down[index] == 0:
                 index += 1
                 continue
-            
-            heapq.heappush(path_heap, up_down[index])
-            
-            if abs(sum(path_heap[ladders:])) > bricks:
+            if len(path_heap) < ladders:
+                heapq.heappush(path_heap, up_down[index])
+            else:
+                smallest = heapq.heappushpop(path_heap, up_down[index])
+                used_bricks = used_bricks + smallest
+                
+            if used_bricks > bricks:
                 break
             
             index += 1
@@ -33,6 +35,6 @@ if __name__ == "__main__":
     s = Solution()
     heights = [4,2,7,6,9,14,12]
     bricks = 5
-    laders = 1    
+    ladders = 1
     
-    print(s.furthestBuilding(heights, bricks, laders))
+    print(s.furthestBuilding(heights, bricks, ladders))
