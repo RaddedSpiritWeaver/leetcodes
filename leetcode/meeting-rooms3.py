@@ -22,6 +22,15 @@ class Solution:
         for _ in range(len(meetings)):
             meeting = heapq.heappop(meetings) 
             meeting_duration = (meeting[1] - meeting[0])
+            #   need to reset free rooms before processing the meeting
+            #   TODO: dono about the efficiency, but since its less than 100 guess its fine
+            for _ in range(len(rooms_in_use)):
+                room = heapq.heappop(rooms_in_use)
+                if room[0] <= meeting[0]:
+                    heapq.heappush(free_rooms, room[1])
+                else:
+                    heapq.heappush(rooms_in_use,room)
+                    break
             
             #   if there is a free room
             if free_rooms:
