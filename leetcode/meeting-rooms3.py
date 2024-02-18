@@ -1,36 +1,40 @@
 import heapq
 from typing import List
 
+# TODO: could store the actual meetings allocated to each room, but thats unrequited for
+#   solving the actual problem
+
 class Solution:
     def mostBooked(self, n: int, meetings: List[List[int]]) -> int:
         #   create a priority queue based on the start time
         #   this creates a min heap, always poping the smallest start time
         heapq.heapify(meetings)
         
-        #   array to hold time when room x gets empty, (time, room_index)
-        #   need to use this as a priority queue as well
-        room_free_time = [(0, i)for i in range(n)]
+        #   heap to store data of rooms under use
+        rooms_in_use = []
+        #   heap to store free rooms
+        free_rooms = [i for i in range(n)]
+        heapq.heapify(free_rooms)
         #   array to hold meetings held
         room_meeting_count = [0 for _ in range(n)]
-        # TODO: could store the actual meetings allocated to each room, but thats unrequited for
-        #   solving the actual problem
+        
+        
         for _ in range(len(meetings)):
             meeting = heapq.heappop(meetings) 
             meeting_duration = (meeting[1] - meeting[0])
             
-            first_empty_room = heapq.heappop(room_free_time)
+            #   if there is a free room
+            if free_rooms:
+                room_index = heapq.heappop(free_rooms)
+                heapq.heappush(rooms_in_use, (meeting[1], room_index))
+                room_meeting_count[room_index] += 1
             
-            ending_time = 0
-            if meeting[0] >= first_empty_room[0]:
-                #   there is no delay, so the room is free when the meeting ends
-                ending_time = meeting[1]
             else:
-                #   the room is free, after the previous meeting is done, and the new meeting duration ends
+                #   find the first room that gets free
+                first_empty_room = heapq.heappop(rooms_in_use)
                 ending_time = first_empty_room[0] + meeting_duration
-            
-            new_room_time = (ending_time, first_empty_room[1])
-            heapq.heappush(room_free_time, new_room_time)
-            room_meeting_count[first_empty_room[1]] += 1 
+                heapq.heappush(rooms_in_use, (ending_time, first_empty_room[1]))
+                room_meeting_count[first_empty_room[1]] += 1    
 
         max_meetings = -1
         index = -1
