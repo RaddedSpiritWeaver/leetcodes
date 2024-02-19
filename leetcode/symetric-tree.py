@@ -7,15 +7,6 @@ class TreeNode:
         self.left = left
         self.right = right
 
-# def get_child(index: int, left = True):
-#     if left:
-#         return 2 * index + 1
-#     else:
-#         return 2 * index + 2
-
-
-
-
 class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
         #   gonna go down level by level
@@ -25,8 +16,8 @@ class Solution:
         level = 1
         while (2 ** level) - 1 <= len(root):
             #   TODO: could change the iteration
-            #   take that sub array, it should be polindrom
-            level_begin = 2 ** (level - 1)
+            #   take that sub array, it should be palindrome
+            level_begin = 2 ** (level - 1) - 1
             level_end = 2 ** level - 1
             sublist = root[level_begin : level_end]
             if  sublist != sublist[::-1]:
