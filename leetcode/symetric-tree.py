@@ -7,6 +7,25 @@ class TreeNode:
         self.left = left
         self.right = right
 
+def bfs(root:TreeNode) -> list[int]:
+    queue = []
+    result = []
+    if root is None:
+        return result
+    
+    queue.append(root)
+    while queue:
+        node = queue.pop(0)
+        if node is None:
+            result.append(None)
+        else:
+            result.append(node.val)
+        queue.append(node.left)
+        queue.append(node.right)
+        
+    return result
+        
+
 # def get_child(index: int, left = True):
 #     if left:
 #         return 2 * index + 1
