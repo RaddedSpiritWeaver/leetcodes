@@ -104,20 +104,32 @@ def get_most_deep(node: TreeNode, left= True):
     
 
 
+# class Solution:
+#     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+#         if root is None:
+#             return True
+#         if root.left is not None and root.right is not None:
+#             visits_right, visits_left = [], []
+#             dfs_b(root.left, visits_left)
+#             dfs_b(root.right, visits_right, left=False)
+#             return visits_right == visits_left
+#         elif root.left is None and root.right is None:
+#             return True
+#         else:
+#             return False
 class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
-        if root is None:
+        if root == None:
             return True
-        if root.left is not None and root.right is not None:
-            visits_right, visits_left = [], []
-            dfs_b(root.left, visits_left)
-            dfs_b(root.right, visits_right, left=False)
-            return visits_right == visits_left
-        elif root.left is None and root.right is None:
-            return True
-        else:
-            return False
+        return self.isMirror(root.left, root.right)
     
+    def isMirror(self, node1, node2):
+        if node1 == None and node2 == None:
+            return True
+        if node1 == None or node2 == None:
+            return False
+        
+        return node1.val == node2.val and self.isMirror(node1.left, node2.right) and self.isMirror(node1.right, node2.left)
 
 if __name__ == "__main__":
     s = Solution()
