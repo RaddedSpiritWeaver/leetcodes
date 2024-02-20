@@ -65,13 +65,13 @@ def dfs_b(node:TreeNode, visits:list, left= True):
             visits.append("None")
             return
     if left:
-        dfs_b(node.left, visits)
-        dfs_b(node.right, visits)
+        dfs_b(node.left, visits, left)
+        dfs_b(node.right, visits, left)
         visits.append(node.val)
         return
     else:
-        dfs_b(node.right, visits, False)
-        dfs_b(node.left, visits, False)
+        dfs_b(node.right, visits, left)
+        dfs_b(node.left, visits, left)
         visits.append(node.val)
         return
     
@@ -106,12 +106,17 @@ def get_most_deep(node: TreeNode, left= True):
 
 class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
-        overall_visits = []
-        visits_left, visits_right = [], []
-        # print(dfs(root, visits_right, visits_left))
-        dfs_change_able(root.left, visits_left)
-        dfs_change_able(root.right, visits_right, left=False)
-        return "im passing"
+        if root is None:
+            return True
+        if root.left is not None and root.right is not None:
+            visits_right, visits_left = [], []
+            dfs_b(root.left, visits_left)
+            dfs_b(root.right, visits_right, left=False)
+            return visits_right == visits_left
+        elif root.left is None and root.right is None:
+            return True
+        else:
+            return False
     
 
 if __name__ == "__main__":
@@ -126,35 +131,8 @@ if __name__ == "__main__":
                                     left= TreeNode(val= 4, left= None, right= TreeNode(val=5, left=None, right=None)),
                                     right= TreeNode(val= 3, left= None, right= None))
                     )
+    print(s.isSymmetric(root))
     
     root = TreeNode(val=1, right= None, left=None)
     
-    # root = TreeNode(val= 1, 
-    #                 left= TreeNode(val= 2,
-    #                                left= None,
-    #                                right= TreeNode(val= 3, left= None, right= None),),
-                    
-    #                 right= TreeNode(val= 2,
-    #                                 left= None,
-    #                                 right= TreeNode(val= 3, left= None, right= None))
-    #                 )
-    # l = []
-    # l1 = []
-    # l2 = []
-    # dfs_a(root, l)
-    # dfs_a(root.left, l1)
-    # dfs_a(root.right, l2)
-    # print(l)
-    # print(f"l1: {l1}")
-    # print(f"l2: {l2}")
-    l1, l2 = [], []
-    dfs_b(root.right, l2, False)
-    dfs_b(root.left, l1)
-    print(l1)
-    print(l2)
-    
-    # print(get_most_deep(root))
-    # print(get_most_deep(root.right, False))
-    # print(bfs(root))
-    
-    # print(s.isSymmetric(root))
+    print(s.isSymmetric(root))
