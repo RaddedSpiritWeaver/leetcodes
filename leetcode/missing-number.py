@@ -1,14 +1,20 @@
-import heapq
 class Solution:
     def missingNumber(self, nums: List[int]) -> int:
-        heapq.heapify(nums)
-        index = 0
-        while nums:
-            num = heapq.heappop(nums)
-            if num != index:
-                return index
-            index += 1
-        return index
+        n = len(nums)
+        wanna_be_sum = n * (n + 1) // 2
+        return wanna_be_sum - sum(nums)
+
+# import heapq
+# class Solution:
+#     def missingNumber(self, nums: List[int]) -> int:
+#         heapq.heapify(nums)
+#         index = 0
+#         while nums:
+#             num = heapq.heappop(nums)
+#             if num != index:
+#                 return index
+#             index += 1
+#         return index
 
 # class Solution:
 #     def missingNumber(self, nums: List[int]) -> int:
