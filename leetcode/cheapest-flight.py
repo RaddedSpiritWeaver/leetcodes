@@ -54,11 +54,11 @@ class Solution:
                 break
             
             #   visited check
-            if node[1] in visited:
-                continue
+            # if node[1] in visited:
+            #     continue
             
             #   all tests passed, add to visited and process
-            visited.append(node[1])
+            # visited.append(node[1])
             #   child expansion
             for child_index, cost in nodes[node[1]].children:
                 new_element = (node[0] + cost, child_index, node[2] + 1)
