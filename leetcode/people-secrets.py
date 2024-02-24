@@ -23,13 +23,17 @@ class Solution:
         for t, meetings_t in meetings_at_t:
             check = True
             while check:
+                update = []
                 for i in range(len(meetings_t)):
                     if (meetings_t[i][0] in know_secret) or (meetings_t[i][1] in know_secret):
                         know_secret.update([meetings_t[i][0], meetings_t[i][1]])
-                        meetings_t.pop(i)
-                        break
-                else:        
+                        update.append(i)
+                if not update:
                     check = False
+                else:
+                    for i in sorted(update, reverse=True):
+                        del meetings_t[i]
+                    
                     
         
         return list(know_secret)
