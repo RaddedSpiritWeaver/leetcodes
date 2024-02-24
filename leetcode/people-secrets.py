@@ -23,7 +23,7 @@ class Solution:
         
         rels = [[] for _ in range(n)]
         
-        meetings.sort(key= lambda x: x[2])
+        # meetings.sort(key= lambda x: x[2])
         for p1, p2, t in meetings:
             rels[p1].append([p2, t])
             rels[p2].append([p1, t])
