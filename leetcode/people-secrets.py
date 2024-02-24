@@ -9,20 +9,28 @@ class Solution:
         # meetings.append([0, first_person, 0])
 
         #   hold all the people that meet at time i in set, and i as the key
-        chrono: Dict[int ,Set]= {}
+        chronology: Dict[int ,List]= {}
         for p1, p2, t in meetings:
             try:
-                chrono[t].update([p1, p2])
+                chronology[t].append([p1, p2])
             except KeyError:
-                chrono[t] = set([p1, p2])
+                chronology[t] = [[p1, p2]]
                 
-        covid = [[k, chrono[k]] for k in chrono.keys()]
-        covid.sort(key= lambda x: x[0])
+        meetings_at_t = [[k, chronology[k]] for k in chronology.keys()]
+        meetings_at_t.sort(key= lambda x: x[0])
 
         know_secret = set([0, first_person])
-        for t, people in covid:
-            if know_secret.intersection(people):
-                know_secret = know_secret.union(people)
+        for t, meetings_t in meetings_at_t:
+            check = True
+            while check:
+                for i in range(len(meetings_t)):
+                    if (meetings_t[i][0] in know_secret) or (meetings_t[i][1] in know_secret):
+                        know_secret.update([meetings_t[i][0], meetings_t[i][1]])
+                        meetings_t.pop(i)
+                        break
+                else:        
+                    check = False
+                    
         
         return list(know_secret)
     
