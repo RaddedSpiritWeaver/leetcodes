@@ -9,7 +9,7 @@ class TreeNode:
         self.right = right
 
 class Solution:
-    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+    def isSameTree_1(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
         def dfs(node: TreeNode, visited:list):
             if node is None:
                 visited.append("N")
@@ -23,6 +23,19 @@ class Solution:
         dfs(q, visit_q)
         dfs(p, visit_p)
         return visit_q == visit_p
+    
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        
+        if p is None and q is None:
+            return True
+        
+        if (p is None and q) or (p and q is None):
+            return False
+        
+        if p.val==q.val and self.isSameTree(p.left,q.left) and self.isSameTree(p.right,q.right):
+            return True
+        
+        return False
     
 if __name__ == "__main__":
     sol = Solution()
