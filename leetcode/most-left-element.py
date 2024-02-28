@@ -14,22 +14,21 @@ class Solution:
         #   with this traversal, also get depth of the tree
         #   store the left visits with their depth
         #   in the end return the first node with the most depth from the left side visits
-        left_visits = []
+        visits = []
         
-        def dfs(node: TreeNode, depth:int, is_left=False):
+        def dfs(node: TreeNode, depth:int):
             if node is None:
                 return depth - 1
             #   prioritize left
-            l_d = dfs(node.left, depth + 1, True)
+            l_d = dfs(node.left, depth + 1)
             r_d = dfs(node.right, depth + 1)
             
-            if is_left:
-                left_visits.append((node.val, depth))
+            visits.append((node.val, depth))
             return max(l_d, r_d)
         
-        max_depth = dfs(root)
+        max_depth = dfs(root, 0)
         
-        for left_leaf in left_visits:
+        for left_leaf in visits:
             if left_leaf[1] == max_depth:
                 return left_leaf[0]
             
@@ -38,7 +37,8 @@ class Solution:
     
 if __name__ == "__main__":
     sol = Solution()
-    root = TreeNode(1,  left=  TreeNode(2,  left= TreeNode(4)),
-                        right= TreeNode(3,  left= TreeNode(5, left=TreeNode(7)),
-                                            right=TreeNode(6)))
+    root = TreeNode(0)
+    # root = TreeNode(1,  left=  TreeNode(2,  left= TreeNode(4)),
+    #                     right= TreeNode(3,  left= TreeNode(5, left=TreeNode(7)),
+    #                                         right=TreeNode(6)))
     print(sol.findBottomLeftValue(root))
