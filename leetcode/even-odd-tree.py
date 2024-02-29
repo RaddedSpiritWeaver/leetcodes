@@ -29,7 +29,7 @@ class Solution:
                     last_value = -1
                     even_row = True
                 else:
-                    last_value = 100_001
+                    last_value = 1_000_001
                     even_row = False
                     
             if node.left is not None:
