@@ -17,24 +17,11 @@ class Solution:
         #   TODO: maybe also a list comprehension thing for the row checking
         even_q = [root]
         odd_q : List[TreeNode] = []
-        # processing_even = True
+        processing_even = True
+        #   TODO: for the last level, the row processing is repeated, room for efficiency
         while even_q or odd_q:
-            if not even_q:
-                processing_even = False
-                #   process the odd level
-                last_val = 100_000
-                for i in range(len(odd_q)):
-                    if odd_q[i].val % 2 != 0 or odd_q[i].val >= last_val:
-                        return False
-                    last_val = odd_q[i].val
-            if not odd_q:
-                processing_even = True
-                #   process the even level
-                last_val = -1
-                for i in range(len(even_q)):
-                    if even_q[i].val % 2 != 1 or even_q[i].val <= last_val:
-                        return False
-                    last_val = even_q[i].val
+            
+            
                 
             if even_q and processing_even:
                 node = even_q.pop(0)
@@ -42,6 +29,14 @@ class Solution:
                     odd_q.append(node.left)
                 if node.right is not None:
                     odd_q.append(node.right)
+                if not even_q:
+                    processing_even = False
+                    #   process the odd level
+                    last_val = 100_000
+                    for i in range(len(odd_q)):
+                        if odd_q[i].val % 2 != 0 or odd_q[i].val >= last_val:
+                            return False
+                        last_val = odd_q[i].val
             
             if odd_q and not processing_even:
                 node = odd_q.pop(0)
@@ -49,6 +44,14 @@ class Solution:
                     even_q.append(node.left)
                 if node.right is not None:
                     even_q.append(node.right)
+                if not odd_q:
+                    processing_even = True
+                    #   process the even level
+                    last_val = -1
+                    for i in range(len(even_q)):
+                        if even_q[i].val % 2 != 1 or even_q[i].val <= last_val:
+                            return False
+                        last_val = even_q[i].val
         
         return True
         
