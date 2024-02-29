@@ -1,6 +1,6 @@
 # Definition for a binary tree node.
 from typing import Optional
-from typing import List
+from typing import List, Tuple
 
 
 class TreeNode:
@@ -11,48 +11,41 @@ class TreeNode:
         
 class Solution:
     def isEvenOddTree(self, root: Optional[TreeNode]) -> bool:
-        #   we are going to bfs with two queues, one for even, one for odd
-        #   since we start at level 0
-        #   TODO: think off a way to do it linear
-        #   TODO: maybe also a list comprehension thing for the row checking
-        even_q = [root]
-        odd_q : List[TreeNode] = []
-        processing_even = True
-        #   TODO: for the last level, the row processing is repeated, room for efficiency
-        while even_q or odd_q:
+        #   store the node and the depth (level) in the queue
+        queue: List[Tuple[TreeNode, int]] = [(root, 0)]
+        level_holder = -1
+        #   or 100_001
+        last_value = -1
+        #   use it just to decrease the mod check, basically a mirror of level_holder % 2
+        even_row = False
+
+        while queue:
+            node, level = queue.pop(0)
+            if level != level_holder:
+                #   we are in a new level
+                level_holder = level
+                if level % 2 == 0:
+                    # set to minimum
+                    last_value = -1
+                    even_row = True
+                else:
+                    last_value = 100_001
+                    even_row = False
+                    
+            if node.left is not None:
+                queue.append((node.left, level + 1))
+            if node.right is not None:
+                queue.append((node.right, level + 1))
             
+            if even_row:
+                if last_value >= node.val or node.val % 2 == 0:
+                    return False
+            else:
+                if last_value <= node.val or node.val % 2 == 1:
+                    return False
             
-                
-            if even_q and processing_even:
-                node = even_q.pop(0)
-                if node.left is not None:
-                    odd_q.append(node.left)
-                if node.right is not None:
-                    odd_q.append(node.right)
-                if not even_q:
-                    processing_even = False
-                    #   process the odd level
-                    last_val = 100_000
-                    for i in range(len(odd_q)):
-                        if odd_q[i].val % 2 != 0 or odd_q[i].val >= last_val:
-                            return False
-                        last_val = odd_q[i].val
+            last_value = node.val
             
-            if odd_q and not processing_even:
-                node = odd_q.pop(0)
-                if node.left is not None:
-                    even_q.append(node.left)
-                if node.right is not None:
-                    even_q.append(node.right)
-                if not odd_q:
-                    processing_even = True
-                    #   process the even level
-                    last_val = -1
-                    for i in range(len(even_q)):
-                        if even_q[i].val % 2 != 1 or even_q[i].val <= last_val:
-                            return False
-                        last_val = even_q[i].val
-        
         return True
         
     
