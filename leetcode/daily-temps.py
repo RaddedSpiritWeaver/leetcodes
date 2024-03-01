@@ -5,18 +5,13 @@ class Solution:
         res = [0 for _ in range(len(temperatures))]
         stack = []
         for i in range(len(temperatures)):
-            #   push value and index at the same time
             if not stack:
                 stack.append((temperatures[i], i))
             else:
-                #   when pushing to the stack, pop smaller values
-                poped = []
                 while stack[-1][0] < temperatures[i]:
-                    poped.append(stack.pop())
-                    if not stack: break
-                #   for those poped values, process their result dif  
-                for _ , j in poped:
+                    _ , j = stack.pop()
                     res[j] = i - j
+                    if not stack: break
                 stack.append((temperatures[i], i))
         return res
         
