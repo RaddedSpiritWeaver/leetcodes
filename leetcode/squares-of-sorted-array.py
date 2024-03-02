@@ -19,6 +19,9 @@ class Solution:
                         res.append(stack.pop())
                     else: break
                 res.append(squared)
+        # to handle all negative list
+        while stack:
+            res.append(stack.pop())
         return res
 
 if __name__ == "__main__":
