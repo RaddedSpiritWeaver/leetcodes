@@ -22,15 +22,11 @@ class Solution:
             
         target = length - n
         before, after = None, None
-        try:
+        if target - 1 >= 0:
             before = nodes[target - 1]
-        except KeyError:
-            pass
         
-        try:
+        if target + 1 < length:
             after = nodes[target + 1]
-        except KeyError:
-            pass
         
         if before is None:
             if after is None:
