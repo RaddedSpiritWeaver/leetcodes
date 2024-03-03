@@ -1,7 +1,6 @@
 # Definition for singly-linked list.
 from typing import Optional
 
-
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
@@ -13,33 +12,40 @@ class Solution:
     and then come to it
     """
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        nodes = {}
         length = 0
         node = head
         while node is not None:
+            nodes[length] = node
             length += 1
             node = node.next
+            
+        target = length - n
+        before, after = None, None
+        try:
+            before = nodes[target - 1]
+        except KeyError:
+            pass
         
-        i, target = 0, length - n
-        node = head
-        last = None
-        while i != target:
-            i += 1
-            last = node
-            node = node.next
-        else:
-            if last is None and node is None:
+        try:
+            after = nodes[target + 1]
+        except KeyError:
+            pass
+        
+        if before is None:
+            if after is None:
                 return None
-            if last is None and node is not None:
-                return node.next
-            last.next = node.next
+            else:
+                return after
+        else:
+            before.next = after
         
         return head
-    
     
 if __name__ == "__main__":
     sol = Solution()
     l = [1,2,3,4,5]
-    n = 5
+    n = 1
     head = ListNode(1)
     last = head
     for i in range(1, len(l)):
