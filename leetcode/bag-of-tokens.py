@@ -21,17 +21,14 @@ class Solution:
                 score += 1
                 if score > max_score:
                     max_score = score
-                continue
-            else:
+            elif score > 0:
                 #   try to increase power
-                if score > 0:
-                    power += tokens[end]
-                    end -= 1
-                    score -= 1
-                    continue
-                else:
-                    # we dont have power to move begin or we dont have score to move end 
-                    break
+                power += tokens[end]
+                end -= 1
+                score -= 1
+            else:
+                # we dont have power to move begin or we dont have score to move end 
+                break
         
         return max_score      
                 
