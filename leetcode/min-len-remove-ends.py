@@ -2,7 +2,7 @@ class Solution:
     def minimumLength(self, s: str) -> int:
         begin, end = 0, len(s) - 1
         
-        while begin <= end:
+        while begin < end:
             if s[begin] == s[end]:
                 segment_char = s[begin]
                 begin += 1
@@ -21,7 +21,7 @@ class Solution:
     
 if __name__ == "__main__":
     sol = Solution()
-    # s = "abbbbbbbbbbbbbbbbbbba"
+    s = "abbbbbbbbbbbbbbbbbbba"
     # s = 'aabccabba'
-    s = 'bbbbbbbbbbbbbbbbbbbbbbbbbbbabbbbbbbbbbbbbbbccbcbcbccbbabbb'
+    # s = 'bbbbbbbbbbbbbbbbbbbbbbbbbbbabbbbbbbbbbbbbbbccbcbcbccbbabbb'
     print(sol.minimumLength(s))
