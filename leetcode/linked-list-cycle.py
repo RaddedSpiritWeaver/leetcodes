@@ -9,18 +9,12 @@ class ListNode:
 
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
-        if head is None:
-            return False
-        fast = head.next
-        slow = head
-        while fast is not None:
-            if fast is slow:
-                return True
+        slow = fast = head
+        while fast and fast.next:
             slow = slow.next
-            try:
-                fast = fast.next.next
-            except AttributeError:
-                return False
+            fast = fast.next.next
+            if slow == fast:
+                return True
         return False
     
 if __name__ == "__main__":
