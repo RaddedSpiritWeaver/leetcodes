@@ -9,14 +9,18 @@ class ListNode:
 
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
-        visited = []
-        node = head
-        while node is not None:
-            if node in visited:
+        if head is None:
+            return False
+        fast = head.next
+        slow = head
+        while fast is not None:
+            if fast is slow:
                 return True
-            visited.append(node)
-            node = node.next
-        
+            slow = slow.next
+            try:
+                fast = fast.next.next
+            except AttributeError:
+                return False
         return False
     
 if __name__ == "__main__":
