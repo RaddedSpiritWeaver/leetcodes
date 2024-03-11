@@ -26,28 +26,30 @@ class Solution:
         if k == len(arr):
             return len(arr) * max(arr)
         
-        results = []
-        """
-        need a starting point for the array
-        """
+        # results = []
+        max_holder = 0
         arr_len = len(arr)
+        
         def sub_partition(current_state:list, start):
+            nonlocal max_holder
             for kk in range(1,k + 1):
-                if start + kk < arr_len:
+                if start + kk <= arr_len:
                     max_val = max(arr[start:start + kk])
                     current_state[start:start + kk] = [max_val] * kk
-                    if arr[start:start + kk] == [1,15,7]:
+                    if arr[start:start + kk] == [2,5,10]:
                         pass
-                    results.append(current_state)
+                    if sum(current_state) > max_holder:
+                        max_holder = sum(current_state)
                     sub_partition(current_state.copy(),start + kk)
             return
         
         sub_partition(arr.copy(), 0)
-        for r in results:
-            print(r)
+        # for r in results:
+        #     print(r)
         
-        print("!!!-!!!-!!!-!!!")
-        print(max(results, key=sum))
+        # print("!!!-!!!-!!!-!!!")
+        # x = max(results, key=sum)
+        return max_holder
         
     
 if __name__ == "__main__":
@@ -61,6 +63,7 @@ if __name__ == "__main__":
     
 """
 [1,15,7,9,2,5,10]
+[0,1,2,3,4,5,6]
 [1,2,3,4,5,6,7]
 [15,15,7,10,10,4,10,10,4]
 [15,15,15,10,19,10]
