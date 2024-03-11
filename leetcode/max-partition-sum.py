@@ -5,74 +5,57 @@ in a dp way, we should first solve it form k = 1 and then build up to the actual
 
 select the min values and merge them with their highest neighbor
 """
+
+"""
+wanted to be clever and not brute force it but in the end, lets just go for an actual brute force thing,
+so in my original thoughts about brute forcing this issue, i had the idea to make it like a search thing and generate
+next states based on the current state, but i cant figure a nice way to code this at all :)
+
+now after cheating a bit we are going to go for a recursive construction of the method
+start from the beginning of the array, and then imagine all possible sub sets this contains
+and then call the function from that point on
+"""
+
 class Solution:
     
     def maxSumAfterPartitioning(self, arr: List[int], k: int) -> int:
+        #   handle extremes
         if k == 1:
             return sum(arr)
         
+        if k == len(arr):
+            return len(arr) * max(arr)
         
-        groups = [i for i in range(1,len(arr) + 1)]
+        results = []
+        """
+        need a starting point for the array
+        """
+        arr_len = len(arr)
+        def sub_partition(current_state:list, start):
+            for kk in range(1,k + 1):
+                if start + kk < arr_len:
+                    max_val = max(arr[start:start + kk])
+                    current_state[start:start + kk] = [max_val] * kk
+                    if arr[start:start + kk] == [1,15,7]:
+                        pass
+                    results.append(current_state)
+                    sub_partition(current_state.copy(),start + kk)
+            return
         
-        def check_and_merge(target, target_val, small_index, small_group):
-            group = groups[target]
-            if group != small_group and groups.count(group) < kk and arr[small_index] < target_val:
-                #   merge
-                groups[small_index] = group
-                arr[small_index] = target_val
-                # heapq.heappush(heap, target_val)
-                return True
-            return False
+        sub_partition(arr.copy(), 0)
+        for r in results:
+            print(r)
         
-        for kk in range(2, k + 1):
-            heap = arr.copy()
-            heapq.heapify(heap)
-            processed = [False] * len(arr)
-            while heap:
-                smallest_val = heapq.heappop(heap)
-                indices = [i for i in range(len(arr)) if arr[i] == smallest_val]
-                for smallest_val_index in indices:
-                    if not processed[smallest_val_index]:
-                        processed[smallest_val_index] = True
-                    else:
-                        continue
-                    #   check its left and right values
-                    left = smallest_val_index - 1
-                    right = smallest_val_index + 1
-                    left_val = arr[left] if left >= 0 else -1
-                    right_val = arr[right] if right < len(arr) else -1
-                    cur_group = groups[smallest_val_index]
-                    #   prioritize left
-                    if left_val >= right_val:
-                        #   left
-                        if check_and_merge(left, left_val, smallest_val_index, cur_group): break
-                        elif check_and_merge(right, right_val, smallest_val_index, cur_group): break
-                        else: 
-                            # heapq.heappush(heap, smallest_val)
-                            go_next = True
-                    else:
-                        #   right
-                        if check_and_merge(right, right_val, smallest_val_index, cur_group): break
-                        elif check_and_merge(left, left_val, smallest_val_index, cur_group): break
-                        else: 
-                            # heapq.heappush(heap, smallest_val)
-                            go_next = True
-                # else:
-                #     go_next = True
-                
-                
-                
-        print(arr)
-        return sum(arr)
-        
+        print("!!!-!!!-!!!-!!!")
+        print(max(results, key=sum))
         
     
 if __name__ == "__main__":
     sol = Solution()
-    arr = [1,4,1,5,7,3,6,1,9,9,3]
-    k = 4
-    # arr = [1,15,7,9,2,5,10]
-    # k = 3
+    # arr = [1,4,1,5,7,3,6,1,9,9,3]
+    # k = 4
+    arr = [1,15,7,9,2,5,10]
+    k = 3
     print(sol.maxSumAfterPartitioning(arr, k))
     
     
