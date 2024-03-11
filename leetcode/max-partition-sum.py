@@ -34,17 +34,14 @@ class Solution:
             return len(arr) * max(arr)
         
         dp = [0] * len(arr)
-        dp[0] = arr[0]
-        for i in range(1,len(arr)):
+        # dp[0] = arr[0]
+        for i in range(len(arr)):
             possibilities = []
-            for j in range(1,k + 1):
-                if i - j < -1:
-                    break
-                max_i_j = max(arr[i - j + 1:i + 1])
-                if i - j > 0:
-                    possibilities.append(dp[i-j] + max_i_j * j)
-                else:
-                    possibilities.append(max_i_j * j)
+            for j in range(k):
+                start = i - j if i - j >= 0 else 0
+                max_i_j = max(arr[start:i + 1])
+                dp_val = dp[start - 1] if start - 1 >= 0 else 0
+                possibilities.append(dp_val + max_i_j * (i - start + 1))
             dp[i] = max(possibilities)
         
         return dp[-1]
@@ -87,7 +84,7 @@ if __name__ == "__main__":
     arr = [10,9,3,2]
     k = 2
     print(sol.maxSumAfterPartitioning(arr, k))
-    print(sol.brute_force(arr,k))
+    # print(sol.brute_force(arr,k))
     
     
 """
