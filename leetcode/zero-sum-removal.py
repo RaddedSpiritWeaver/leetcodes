@@ -9,9 +9,30 @@ class ListNode:
 
 class Solution:
     """
-    kinda like method one where we n^2 search for every possible sequence and check if they sum to 0
+    this time in O(N) we will just store the prefix sum up to each node and when we get the same prefix sum,
+    we need to get those nodes and reconnect
     """
     def removeZeroSumSublists(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode(0, head)
+        prefix_sums = {0 : dummy}
+        
+        current_sum = 0
+        node = dummy.next
+        while node:
+            current_sum += node.val
+            if current_sum not in prefix_sums:
+                prefix_sums[current_sum] = node
+            else:
+                prev = prefix_sums[current_sum]
+                prev.next = node.next
+            node = node.next
+            
+        return dummy.next
+    
+    """
+    kinda like method one where we n^2 search for every possible sequence and check if they sum to 0
+    """    
+    def removeZeroSumSublists_method1(self, head: Optional[ListNode]) -> Optional[ListNode]:
         dummy = ListNode(0, head)
         start = dummy
         
@@ -28,7 +49,7 @@ class Solution:
         
         return dummy.next
         
-    def method_zero(self, head: Optional[ListNode]) -> Optional[ListNode]:
+    def removeZeroSumSublists_method0(self, head: Optional[ListNode]) -> Optional[ListNode]:
         # convert to list
         node = head
         l = []
