@@ -14,17 +14,20 @@ class Solution:
     """
     def removeZeroSumSublists(self, head: Optional[ListNode]) -> Optional[ListNode]:
         dummy = ListNode(0, head)
-        prefix_sums = {0 : dummy}
+        prefix_sums = {0 : [dummy]}
         
         current_sum = 0
         node = dummy.next
         while node:
             current_sum += node.val
             if current_sum not in prefix_sums:
-                prefix_sums[current_sum] = node
+                prefix_sums[current_sum] = [node]
             else:
-                prev = prefix_sums[current_sum]
-                prev.next = node.next
+                prev_list = prefix_sums[current_sum]
+                for prev in prev_list:
+                    prev.next = node.next
+                prefix_sums[current_sum].append(node)
+                #   cant just use the last node and we need to update all the nodes with that prefix sum
             node = node.next
             
         return dummy.next
