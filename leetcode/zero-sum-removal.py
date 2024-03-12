@@ -2,17 +2,33 @@
 
 from typing import Optional
 
-"""
-[1,1,4,-2,-3,5,-5]
-"""
-
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
 
 class Solution:
+    """
+    kinda like method one where we n^2 search for every possible sequence and check if they sum to 0
+    """
     def removeZeroSumSublists(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode(0, head)
+        start = dummy
+        
+        while start:
+            gathered_sum = 0
+            end = start.next
+            while end:
+                gathered_sum += end.val
+                if gathered_sum == 0:
+                    start.next = end.next
+                end = end.next
+            
+            start = start.next
+        
+        return dummy.next
+        
+    def method_zero(self, head: Optional[ListNode]) -> Optional[ListNode]:
         # convert to list
         node = head
         l = []
