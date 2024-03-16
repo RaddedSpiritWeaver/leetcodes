@@ -24,7 +24,8 @@ and then call the function from that point on
 """
 # [1,15,7,9,2,5,10]
 class Solution:
-    
+    # TODO: could make it cleaner using min
+    # TODO: try the recursive dp method
     def maxSumAfterPartitioning(self, arr: List[int], k: int) -> int:
         #   handle extremes
         if k == 1:

@@ -38,7 +38,7 @@ class Solution:
         
         #   ok now the search begins
         #   need to have a heapq storing (current_cost, node_index, depth)
-        visited = []
+        # visited = []
         queue = [(0, src, 0)]
         result = -1
         #   while there is an element in the queue

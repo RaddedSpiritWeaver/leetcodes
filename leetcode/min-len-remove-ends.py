@@ -17,7 +17,7 @@ class Solution:
     
 if __name__ == "__main__":
     sol = Solution()
-    s = "abbbbbbbbbbbbbbbbbbba"
+    # s = "abbbbbbbbbbbbbbbbbbba"
     # s = 'aabccabba'
-    # s = 'bbbbbbbbbbbbbbbbbbbbbbbbbbbabbbbbbbbbbbbbbbccbcbcbccbbabbb'
+    s = 'bbbbbbbbbbbbbbbbbbbbbbbbbbbabbbbbbbbbbbbbbbccbcbcbccbbabbb'
     print(sol.minimumLength(s))

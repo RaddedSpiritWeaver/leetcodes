@@ -19,11 +19,11 @@ class Solution:
                     queue.append([res, el[1] + 1])
                 if res > n:
                     continue
-                
+
 if __name__ == "__main__":
     start = timer()
     s = Solution()
     n = 7168
     print(s.numSquares(n))
     end = timer()
-    print(start - end)
+    print("Total time : %.1f ms" % (1000 * (end - start)))

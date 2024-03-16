@@ -7,7 +7,7 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
-
+#   // always better to hold the max instead of finding it again :))
 class Solution:
     max_depth = -1
     val = -1

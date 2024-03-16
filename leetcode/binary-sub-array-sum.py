@@ -35,4 +35,4 @@ if __name__ == "__main__":
     # nums = [1,0,1,0,1]
     # nums = [0,0,0,0,0]
     goal = 0
-    print(sol.numSubarraysWithSum(nums=nums, goal=goal))
+    print(sol.numSubarraysWithSum(nums=nums, goal=goal)) 

@@ -6,8 +6,7 @@ from typing import List
 
 class Solution:
     def get_valid_actions(
-        self, field_shape: tuple, current_loc: tuple, parent: bool
-    ) -> list[tuple]:
+        self, field_shape: tuple, current_loc: tuple, parent: bool) -> list[tuple]:
         result = []
         if not parent:
             next_i = current_loc[0] + 1

@@ -1,6 +1,8 @@
 from typing import List
 
-
+#   TODO:   can do this all in one run of the array basically
+#   TODO:   add zeros support, in case there is one zero, all are zero and the zero position is the total prod
+#           if there is more than 1 zero, then the entire answer is zero
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         length = len(nums)
