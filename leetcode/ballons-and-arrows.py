@@ -10,7 +10,8 @@ guess its better to add to a region where the region gets the least amount of ti
 class Solution:
     def findMinArrowShots(self, points: List[List[int]]) -> int:
         #   need to first handle the smallest balloons since they would probably not intersect
-        points.sort(key=lambda x: (x[1] - x[0]))
+        # points.sort(key=lambda x: (x[1] - x[0]))
+        points.sort(key=lambda x: x[0])
         areas = []
         for point in points:
             matches = []
@@ -36,6 +37,7 @@ class Solution:
     
 if __name__ == "__main__":
     sol = Solution()
+    # points = [[10,16],[2,8],[1,6],[7,12]]
     points = [[3,9],[7,12],[3,8],[6,8],[9,10],[2,9],[0,9],[3,9],[0,6],[2,8]]
     print(sol.findMinArrowShots(points=points))
     
