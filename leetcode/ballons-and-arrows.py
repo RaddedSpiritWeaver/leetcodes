@@ -1,8 +1,15 @@
 from typing import List
 
+"""
+just going through the array and assigning the regions might not be 
+the minimum, since if a ballon intersects with two regions,we will
+chose the first one and it may not be the optimal approach
+"""
 
 class Solution:
     def findMinArrowShots(self, points: List[List[int]]) -> int:
+        #   need to first handle the smallest balloons since they would probably not intersect
+        points.sort(key=lambda x: (x[1] - x[0]))
         areas = []
         for point in points:
             for region in areas:
