@@ -9,26 +9,27 @@ guess its better to add to a region where the region gets the least amount of ti
 trick is to sort by the interval start time :))
 
 even using my older version didnt make it fast and i need to drop the n^2 thing, *my nested for
+
+since they are sorted, then the merged things begining is always from the current, max(beginings) = curr.begin
+
+!!! --> trick to intervals is usually sorting
 """
 
 class Solution:
     def findMinArrowShots(self, points: List[List[int]]) -> int:
-        points.sort(key=lambda x: x[0])
-        length = len(points)
-        i = 1
-        while i < length:
-            #   check i and i - 1
-            a, b = points[i - 1], points[i]
-            # begining of i is smaller than ending of i - 1, they overlap
-            if b[0] <= a[1]:
-                # replace i - 1 with the overlapping section, and pop out points i
-                points[i - 1] = [max(a[0], b[0]), min(a[1], b[1])]
-                del points[i]
-                length -= 1
+        points.sort(key= lambda x: x[0])
+        res = 1
+        prev = points[0]
+        for i in range(1, len(points)):
+            cur = points[i]
+            if cur[0] <= prev[1]:
+                #   overlap
+                prev = [cur[0], min(prev[1], cur[1])]
             else:
-                i += 1
-            
-        return len(points)
+                res += 1
+                prev = cur
+        
+        return res
     
 if __name__ == "__main__":
     sol = Solution()
