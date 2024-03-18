@@ -1,9 +1,10 @@
 from typing import List
-
 """
 just going through the array and assigning the regions might not be 
 the minimum, since if a ballon intersects with two regions,we will
 chose the first one and it may not be the optimal approach
+
+guess its better to add to a region where the region gets the least amount of tightening
 """
 
 class Solution:
@@ -12,17 +13,25 @@ class Solution:
         points.sort(key=lambda x: (x[1] - x[0]))
         areas = []
         for point in points:
-            for region in areas:
+            matches = []
+            for i, region in enumerate(areas):
                 #   if intersect, then merge
                 if point[1] < region[0] or region[1] < point[0]:
                     continue
                 else:
-                    region[0] = max(point[0], region[0])
-                    region[1] = min(region[1], point[1])
-                    break
+                    new_region = [max(point[0], region[0]), min(region[1], point[1])]
+                    diff = region[1] - region[0] - new_region[1] + new_region[0]
+                    matches.append((i, new_region, diff)) 
+            if matches:
+                #   get the min diff match and change that
+                min_match = min(matches, key=lambda x: x[2])
+                region = areas[min_match[0]]
+                region[0] = min_match[1][0]
+                region[1] = min_match[1][1]
             else:
                 areas.append(point)
-        
+            # areas.sort(key=lambda x: (x[1] - x[0]))
+                
         return len(areas)
     
 if __name__ == "__main__":
