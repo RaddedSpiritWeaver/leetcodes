@@ -5,35 +5,30 @@ the minimum, since if a ballon intersects with two regions,we will
 chose the first one and it may not be the optimal approach
 
 guess its better to add to a region where the region gets the least amount of tightening
+
+trick is to sort by the interval start time :))
+
+even using my older version didnt make it fast and i need to drop the n^2 thing, *my nested for
 """
 
 class Solution:
     def findMinArrowShots(self, points: List[List[int]]) -> int:
-        #   need to first handle the smallest balloons since they would probably not intersect
-        # points.sort(key=lambda x: (x[1] - x[0]))
         points.sort(key=lambda x: x[0])
-        areas = []
-        for point in points:
-            matches = []
-            for i, region in enumerate(areas):
-                #   if intersect, then merge
-                if point[1] < region[0] or region[1] < point[0]:
-                    continue
-                else:
-                    new_region = [max(point[0], region[0]), min(region[1], point[1])]
-                    diff = region[1] - region[0] - new_region[1] + new_region[0]
-                    matches.append((i, new_region, diff)) 
-            if matches:
-                #   get the min diff match and change that
-                min_match = min(matches, key=lambda x: x[2])
-                region = areas[min_match[0]]
-                region[0] = min_match[1][0]
-                region[1] = min_match[1][1]
+        length = len(points)
+        i = 1
+        while i < length:
+            #   check i and i - 1
+            a, b = points[i - 1], points[i]
+            # begining of i is smaller than ending of i - 1, they overlap
+            if b[0] <= a[1]:
+                # replace i - 1 with the overlapping section, and pop out points i
+                points[i - 1] = [max(a[0], b[0]), min(a[1], b[1])]
+                del points[i]
+                length -= 1
             else:
-                areas.append(point)
-            # areas.sort(key=lambda x: (x[1] - x[0]))
-                
-        return len(areas)
+                i += 1
+            
+        return len(points)
     
 if __name__ == "__main__":
     sol = Solution()
