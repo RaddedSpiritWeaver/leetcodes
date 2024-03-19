@@ -26,8 +26,10 @@ class Solution:
                     break
                 else:
                     passed.append(item)
-            queue += passed
-            heapq.heapify(queue)
+            for t in passed:
+                heapq.heappush(queue, t)
+            # queue += passed
+            # heapq.heapify(queue)
             time += 1
         
         return time
