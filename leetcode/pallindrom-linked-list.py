@@ -22,8 +22,7 @@ class Solution:
         #   if fast.next was none and the termination condition, we have an odd length list
         #   so if fast is not None, we need to pop one of the stack and then check
         if fast:
-            print("poped")
-            stack.pop()
+            slow = slow.next
 
         while slow:
             cur = stack.pop()
