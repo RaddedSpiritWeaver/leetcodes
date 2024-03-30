@@ -3,43 +3,20 @@ from typing import List
 
 class Solution:
     def countSubarrays(self, nums: List[int], k: int) -> int:
-        lenn = len(nums)
-        #   i know we can do Counter and max, but wanna show the overall way of the algorithim
-        # max_el = max(nums)
-        max_el = 0
-        freq = defaultdict(int)
-        for x in nums:
-            if x > max_el:
-                max_el = x
-            freq[x] += 1
-        
-        if freq[max_el] < k:
-            return 0
-
         res = 0
-        initial_freq = defaultdict(int)
-        for i in range(k - 1):
-            initial_freq[nums[i]] += 1
-        #   do a sliding window for each possible frequency more than k
-        for kk in range(k, freq[max_el] + 1):
-            left, right = -1, kk - 1
-            #   add the new right element
-            iter_counter = initial_freq.copy()
-            initial_freq[nums[right]] += 1
+        max_val = max(nums)
+        count = 0
+        left = 0
+        for right in range(len(nums)):
+            if nums[right] == max_val:
+                count += 1
+            while count == k:
+                if nums[left] == max_val:
+                    count -= 1
+                left += 1
             
-            while right < lenn:
-                iter_counter[nums[right]] += 1
-                while iter_counter[max_el] == kk:
-                    left += 1
-                    iter_counter[nums[left]] -= 1
-                    print(left, right, kk)
-                    res += 1
-                if nums[left] == max_el:
-                    # move one back and one right
-                    iter_counter[nums[left]] += 1
-                    left -= 1
-                right += 1
-            
+            if count == k - 1:
+                res += left
         return res
     
 if __name__ == "__main__":
